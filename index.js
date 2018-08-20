@@ -32,6 +32,9 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 
+var score = 0;
+var hit = 0;
+
 //fixing ball
   function drawBall(){
     ctx.beginPath();
@@ -82,10 +85,24 @@ var bricks = [];
         if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight){
           dy = -dy
           b.status = 0;
+          hit ++;
+          score = hit*10;
+          if(score == 10*brickRowCount*brickColumnCount){
+            alert("You Win \nScore: "+score);
+            document.location.reload();
+          }
         }
       }}
     }
   }
+
+  function drawScore(){
+    ctx.beginPath();
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "green";
+    ctx.fillText("Score: "+score, 8, 20);
+    ctx.closePath();
+}
 
 //moving ball
   function draw(){
@@ -93,6 +110,7 @@ var bricks = [];
     drawBricks();
     drawBall();
     drawPaddle();
+    drawScore();
     collisionDetection();
 
     //when collide boundries
@@ -109,13 +127,13 @@ var bricks = [];
     }
     else if(y + dy > canvas.height-ballRadius) {
       //when touch  in paddle
-      if(x > paddleX-ballRadius && x < paddleX + paddleWidth-ballRadius){
+      if(x > paddleX+ballRadius && x < paddleX + paddleWidth+ballRadius){
         dy = -dy;
 
         count = 1;
       }
     else {
-      alert("Game over");
+      alert("Game over \n score:"+score);
       document.location.reload();
       }
       cl = getRandomColor();
