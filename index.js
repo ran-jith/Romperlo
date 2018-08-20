@@ -1,14 +1,14 @@
 var canvas = document.getElementById('mycan');
 var ctx =   canvas.getContext('2d');
 var col = "False";
-
+  var count = 50;
 //ball init. position
 var x = canvas.width/2;
 var y = canvas.height-30;
 
 var ballRadius = 10;
 var cl;
-
+  var count = 50;
 //changing position for each frame
 var dx = 2;
 var dy = -2;
@@ -54,9 +54,19 @@ var leftPressed = false;
       //ctx.fill();
     }
 
-    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius){
-      dy = -dy;
-      col = "True";
+    if(y + dy < ballRadius){
+      dy = -dy; }
+    else if(y + dy > canvas.height-ballRadius) {
+      //when touch  in paddle
+      if(x > paddleX && x < paddleX + paddleWidth){
+        dy = -dy;
+
+        count = 1;
+      }
+    else {
+      alert("Game over");
+      document.location.reload();
+      }
       cl = getRandomColor();
       //ctx.fill();
     }
@@ -65,13 +75,15 @@ var leftPressed = false;
       paddleX += 10;
     }
     else if(leftPressed && paddleX > 0){
-      paddleX -= 5;
+      paddleX -= 10;
     }
 
     x += dx;
     y += dy;
   }
-setInterval(draw, 10);
+
+
+setInterval(draw, count);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
