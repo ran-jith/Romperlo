@@ -14,9 +14,16 @@ var dx = 2;
 var dy = -2;
 
 //draw paddle(variables)
+var paddleHeight = 15;
+var paddleWidth = 75;
+var paddleX = (canvas.width-paddleWidth)/2;
+
+//user control
+var rightPressed = false;
+var leftPressed = false;
 
 
-//fixing
+//fixing ball
   function drawBall(){
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -25,10 +32,19 @@ var dy = -2;
     ctx.closePath();
   }
 
-//moving
+  function drawPaddle(){
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.closePath();
+  }
+
+//moving ball
   function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
+    drawPaddle();
 
     //when collide boundries
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius){
@@ -44,10 +60,38 @@ var dy = -2;
       cl = getRandomColor();
       //ctx.fill();
     }
+//paddle movement
+    if(rightPressed && paddleX < canvas.width-paddleWidth){
+      paddleX += 10;
+    }
+    else if(leftPressed && paddleX > 0){
+      paddleX -= 5;
+    }
+
     x += dx;
     y += dy;
   }
 setInterval(draw, 10);
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+  function keyDownHandler(e){
+    if(e.keyCode == 39){
+      rightPressed = true;
+    }
+    else if(e.keyCode == 37){
+      leftPressed = true;
+    }
+  }
+  function keyUpHandler(e){
+    if(e.keyCode == 39){
+      rightPressed = false;
+    }
+    else if(e.keyCode == 37){
+      leftPressed = false;
+          }
+  }
   //d();
 
 
