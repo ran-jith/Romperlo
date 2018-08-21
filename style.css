@@ -4,7 +4,7 @@
 }
 
 canvas {
-  background: brown;
+  background: url("bg.png");
   display: block;
   margin: 0 auto;
 }

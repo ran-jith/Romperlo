@@ -24,11 +24,11 @@ var rightPressed = false;
 var leftPressed = false;
 
 //for brick
-var brickRowCount = 3;
-var brickColumnCount = 5;
+var brickRowCount = 4;
+var brickColumnCount = 8;
 var brickWidth = 75;
 var brickHeight = 20;
-var brickPadding = 10;
+var brickPadding = 20;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 
@@ -49,7 +49,7 @@ var lives = 3;
   function drawPaddle(){
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.fill();
     ctx.closePath();
   }
@@ -89,6 +89,9 @@ var bricks = [];
           b.status = 0;
           hit ++;
           score = hit*10;
+          //increase speed
+          dx = dx*1.05;
+          dy = dy*1.05;
           if(score == 10*brickRowCount*brickColumnCount){
             alert("You Win \nScore: "+score);
             document.location.reload();
