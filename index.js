@@ -37,6 +37,17 @@ var score = 0;
 var hit = 0;
 
 var lives = 3;
+var txt2 = "Lives";
+
+var txt = 'Score';
+
+var bricks = [];
+  for(var c=0; c<brickColumnCount; c++){
+  bricks[c] = [];
+    for(var r=0; r<brickRowCount; r++){
+      bricks[c][r] =  { x:0, y:0, status:1};
+  }
+}
 
 //fixing ball
   function drawBall(){
@@ -55,13 +66,6 @@ var lives = 3;
     ctx.closePath();
   }
 
-var bricks = [];
-  for(var c=0; c<brickColumnCount; c++){
-  bricks[c] = [];
-    for(var r=0; r<brickRowCount; r++){
-      bricks[c][r] =  { x:0, y:0, status:1};
-  }
-}
   function drawBricks(){
     for(var c=0; c<brickColumnCount; c++){
       for(var r=0; r<brickRowCount; r++){
@@ -102,7 +106,6 @@ var bricks = [];
     }
   }
 
-  var txt = 'Score';
   function drawScore(ctx, txt, font, x, y){
    ctx.save();
    ctx.font = font;
@@ -116,9 +119,8 @@ var bricks = [];
    ctx.fillText(txt, x, y);
 
    ctx.restore();
-}
+  }
 
-  var txt2 = "Lives";
   function drawLives(ctx, txt2, font, x, y) {
     ctx.save();
     ctx.font = font;
@@ -142,7 +144,7 @@ var bricks = [];
 /////////////////////////////////////////////////////////
 
 
-//moving ball
+//moving ball main fn
   function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
@@ -185,7 +187,7 @@ var bricks = [];
         //dx = 2;
         dy = -2;
         paddleX = (canvas.width-paddleWidth)/2;
-}
+      }
       }
       cl = getRandomColor();
       //ctx.fill();
@@ -206,8 +208,6 @@ var bricks = [];
     y += dy;
   }
 }
-
-setInterval(draw, count);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -258,17 +258,38 @@ document.addEventListener("keyup", keyUpHandler, false);
   }
 
 
-  function paused(){
-    pause = true;
-    var msg1 = "Paused";
-    var msg2 = "Press R to Resume";
-    document.getElementById("warn").innerHTML = msg1 +"<br>"+ msg2;
-  }
-  function resume(){
-    pause = false;
-    document.getElementById("warn").innerHTML = "";
+  var condition = "Pause";
+  var flag = 1;
+  document.getElementById("condition").innerHTML = condition;
+
+  function check(){
+    if(flag == 1){
+      paused();
+    }
+    else if (flag == 0) {
+          resume();
+    }
   }
 
-    function cheat(){
+
+  function paused(){
+      pause = true;
+      var msg1 = "Paused";
+      var msg2 = "Press R to Resume";
+      document.getElementById("condition").innerHTML = " Resume ";
+      document.getElementById("warn").innerHTML = msg1 +"<br>"+ msg2;
+      flag = 0;
+  }
+
+  function resume(){
+    pause = false;
+    document.getElementById("condition").innerHTML = " Pause ";
+    document.getElementById("warn").innerHTML = "";
+    flag = 1;
+  }
+
+  function cheat(){
       lives = 100;
-    }
+  }
+
+setInterval(draw, count);
