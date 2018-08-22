@@ -2,6 +2,7 @@ var canvas = document.getElementById('mycan');
 var ctx =   canvas.getContext('2d');
 var col = "False";
 var count = 50;
+pause = false;
 
 //ball init. position
 var x = canvas.width/2;
@@ -29,7 +30,7 @@ var brickColumnCount = 8;
 var brickWidth = 75;
 var brickHeight = 20;
 var brickPadding = 20;
-var brickOffsetTop = 30;
+var brickOffsetTop = 35;
 var brickOffsetLeft = 30;
 
 var score = 0;
@@ -101,19 +102,45 @@ var bricks = [];
     }
   }
 
-  function drawScore(){
-    ctx.beginPath();
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "green";
-    ctx.fillText("Score: "+score, 8, 20);
-    ctx.closePath();
+  var txt = 'Score';
+  function drawScore(ctx, txt, font, x, y){
+   ctx.save();
+   ctx.font = font;
+   ctx.textBaseline = 'top';
+   ctx.fillStyle = '#f50';
+
+   var width = ctx.measureText(txt).width;
+   ctx.fillRect(x, y, width, parseInt(font, 10));
+
+   ctx.fillStyle = '#000';
+   ctx.fillText(txt, x, y);
+
+   ctx.restore();
 }
 
-function drawLives() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "#0095DD";
-  ctx.fillText("Lives: "+lives, canvas.width-65, 20);
-}
+  var txt2 = "Lives";
+  function drawLives(ctx, txt2, font, x, y) {
+    ctx.save();
+    ctx.font = font;
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#f50';
+
+    var width = ctx.measureText(txt2).width;
+    ctx.fillRect(x, y, width, parseInt(font, 10));
+
+    ctx.fillStyle = '#000';
+    ctx.fillText(txt2, x, y);
+
+    ctx.restore();
+  }
+
+
+
+
+////////////////////////cusotm alert/////////////////////
+
+/////////////////////////////////////////////////////////
+
 
 //moving ball
   function draw(){
@@ -121,10 +148,11 @@ function drawLives() {
     drawBricks();
     drawBall();
     drawPaddle();
-    drawScore();
-    drawLives();
+    drawScore(ctx, txt+":"+score, '20px arial', 30, 10);
+    drawLives(ctx, txt2+":"+lives, '20px arial', 700, 10);
     collisionDetection();
 
+    if(pause == false){
     //when collide boundries
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius){
       dx = -dx;
@@ -139,8 +167,9 @@ function drawLives() {
     }
     else if(y + dy > canvas.height-ballRadius) {
       //when touch  in paddle
-      if(x > paddleX+ballRadius && x < paddleX + paddleWidth+ballRadius){
+      if(x > paddleX-ballRadius && x < paddleX + paddleWidth+ballRadius){
         dy = -dy;
+        //dx = +dx;
 
         count = 1;
       }
@@ -153,7 +182,7 @@ function drawLives() {
       else{
         x = canvas.width/2;
         y = canvas.height-30;
-        dx = 2;
+        //dx = 2;
         dy = -2;
         paddleX = (canvas.width-paddleWidth)/2;
 }
@@ -169,16 +198,20 @@ function drawLives() {
       paddleX -= 10;
     }
 
+  //  if(buttonPressed){
+      //alert("hello");
+    //}
+
     x += dx;
     y += dy;
   }
-
+}
 
 setInterval(draw, count);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("mousemove", mouseMoveHandler, false);
+//document.addEventListener("mousemove", mouseMoveHandler, false);
 
   function keyDownHandler(e){
     if(e.keyCode == 39){
@@ -187,7 +220,18 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
     else if(e.keyCode == 37){
       leftPressed = true;
     }
+    else if (e.keyCode == 106) {
+      cheat();
+    }
+    else if (e.keyCode == 80) {
+      paused();
+    }
+    else if (e.keyCode == 82) {
+      resume();
+    }
   }
+
+
   function keyUpHandler(e){
     if(e.keyCode == 39){
       rightPressed = false;
@@ -197,10 +241,6 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
           }
   }
 
-  function mouseMoveHandler(e){
-    var relativeX = e.clientX - canvas.offsetLeft;
-    if(relativeX > 0 && relativeX < canvas.width) { paddleX = relativeX - paddleWidth/2; }
-  }
   //d();
 
 
@@ -210,5 +250,25 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
       for (var i = 0; i < 6; i++ ) {
           color += letters[Math.floor(Math.random() * 16)];
       }
-      return color;
+      if(color == '#000000'){
+        getRandomColor();}
+      else {
+        return color;
+      }
   }
+
+
+  function paused(){
+    pause = true;
+    var msg1 = "Paused";
+    var msg2 = "Press R to Resume";
+    document.getElementById("warn").innerHTML = msg1 +"<br>"+ msg2;
+  }
+  function resume(){
+    pause = false;
+    document.getElementById("warn").innerHTML = "";
+  }
+
+    function cheat(){
+      lives = 100;
+    }

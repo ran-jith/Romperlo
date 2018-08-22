@@ -1,11 +1,35 @@
 <html>
   <head>
     <title>Sample game</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--END BOOTSTRAP-->
+
+
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+  <div class="canvas-container">
      <canvas id="mycan" width="800" height="500"></canvas>
+      <!-- <button id='button'>Whats up</button>-->
+
+   </div>
+
+   <div id="warn">
+     <b><strong id="warn"></strong></b>
+   </div>
+
+   <div id="pause">
+    <!-- <button type="button" onclick="functionAlert();"class="btn-lg btn-primary">Pause <span class="fa fa-clone"></span></button>-->
+      <button type="button" onclick="paused();"class="btn-lg btn-primary" id="condition">Pause <span class="glyphicon glyphicon-pause"></span></button>
+   </div>
      <script src="index.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </body>
 
 </html>

@@ -3,8 +3,44 @@
   margin: 0;
 }
 
+/*.canvas-container{
+  width: 800px;
+  height: 500px;
+}
+#mycan {
+  background: url("bg.png");
+  display: block;
+  margin: 0 auto;
+}*/
+
 canvas {
   background: url("bg.png");
   display: block;
   margin: 0 auto;
+}
+
+#pause{
+ position: absolute;
+ bottom:  -2px;
+ right: 255px;
+ padding: 20px;
+}
+
+#button {
+  position:absolute;
+  left:10%;
+  top:70%
+}
+
+#warn {
+  position: absolute;
+  color: green ;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+                 0px -5px 35px rgba(255,255,255,0.3);
+  right: 37%;
+  top: 50%;
+  color: green;
+  font-size: 40px;
+  text-align-last: center;
+
 }
