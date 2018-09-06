@@ -1,3 +1,3 @@
 # Romperlo
 Simple javascript game.
-play https://www.ranjithakalur.github.io/Romperlo
+play https://ranjithakalur.github.io/Romperlo/
